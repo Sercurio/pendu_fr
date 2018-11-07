@@ -1,23 +1,20 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-void ft_putchar(char c);
-void ft_putstr(char* str);
-int ft_strlen(char* str);
-int checkWin(char* str);
-char* pickWord();
+#include "ft_pendu.h"
 
 int main(int argc, char const *argv[]) {
 
   char* motMystere = "communisme";
   char* motEtoile;
   char lettreProposee = 0;
+  char listeLettre[52] = {0};
   int tailleMot = ft_strlen(motMystere);
   int win = 0;
   int essai = 9;
   int index = 0;
   int lettreTrouvee = 0;
+  int indexListeLettre = 0;
 
   //motMystere = pickWord();
 
@@ -35,9 +32,15 @@ int main(int argc, char const *argv[]) {
     ft_putstr("Nombre d'essai restant : ");
     ft_putchar(essai + 48);
     ft_putchar('\n');
+    ft_putstr("Lettres deja proposee : ");
+    ft_putstr(listeLettre);
+    ft_putchar('\n');
     ft_putstr(motEtoile);
     ft_putchar('\n');
     scanf(" %c", &lettreProposee);
+    listeLettre[indexListeLettre] = lettreProposee;
+    indexListeLettre++;
+    listeLettre[indexListeLettre] = '\0';
 
     lettreTrouvee = 0;
     while(index != tailleMot){
@@ -52,16 +55,7 @@ int main(int argc, char const *argv[]) {
 
     win = checkWin(motEtoile);
     essai--;
-    switch (essai) {
-      case 8: ft_putstr("____\n");break;
-      case 7: ft_putstr("  |\n  |\n  |\n  |\n__|__\n\n");break;
-      case 6: ft_putstr("   ____\n  |\n  |\n  |\n  |\n__|__\n\n");break;
-      case 5: ft_putstr("   ____\n  |/\n  |\n  |\n  |\n__|__\n\n");break;
-      case 4: ft_putstr("   ____\n  |/   |\n  |\n  |\n  |\n__|__\n\n");break;
-      case 3: ft_putstr("   ____\n  |/   |\n  |    O\n  |\n  |\n__|__\n\n");break;
-      case 2: ft_putstr("   ____\n  |/   |\n  |    O\n  |   /|\\\n  |   \n__|__\n\n");break;
-      case 1: ft_putstr("   ____\n  |/   |\n  |    O\n  |   /|\\\n  |   /-\\\n__|__\n\n");break;
-    }
+    drawPendu(essai);
   }
 
   if(win == 1){
@@ -73,41 +67,6 @@ int main(int argc, char const *argv[]) {
     ft_putstr("t\'as perdu");
   }
   return 0;
-}
-
-//La fameuse methode putchar
-void ft_putchar(char c){
-  write(1, &c, 1);
-}
-
-//Le putchar amélioré
-void ft_putstr(char* str){
-  while(*str != '\0'){
-    ft_putchar(*str);
-    str++;
-  }
-}
-
-//Une methode pour compter le nombre de caractere d'une chaine
-int ft_strlen(char* str){
-  int len = 0;
-  while(*str != '\0'){
-    str++;
-    len++;
-  }
-  return len;
-}
-
-//Une methode pour verifier si le joueur a gagner
-int checkWin(char* str){
-  int win = 1;
-
-  while(*str != '\0'){
-    if(*str == '*')
-      win = 0;
-    str++;
-  }
-  return win;
 }
 
 char* pickWord(){
