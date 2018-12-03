@@ -50,6 +50,7 @@ int main(int argc, char const *argv[]) {
       ft_putstr(motEtoile);
       ft_putchar('\n');
       scanf(" %c", &lettreProposee);
+      lettreProposee=toupper(lettreProposee);
       listeLettre[indexListeLettre] = lettreProposee;
       indexListeLettre++;
       listeLettre[indexListeLettre] = '\0';
@@ -71,12 +72,10 @@ int main(int argc, char const *argv[]) {
     }
 
     if(win == 1){
-      ft_putstr("t\'as gagn");
-      ft_putchar(130);
-      ft_putstr(" man");
+      ft_putstr("t'as gagne");
     }
     else if(win == 0 && essai == 0){
-      ft_putstr("t\'as perdu");
+      ft_putstr("t'as perdu");
     }
   }
   return 0;
