@@ -1,6 +1,6 @@
-#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "ft_pendu.h"
 #include "fichier.h"
 
@@ -26,29 +26,21 @@ int main(int argc, char const *argv[]) {
   //L'ouverture a-t-elle fonctionnée?
   if(fptr != NULL){
 
+    // Recuperation d'un mot pseudo-aleatoire dans le fichier dictionnaire.txt
     nombreDeLigne = nbLignes(fptr);
     motMystere = motAleatoire(fptr, chiffreAleatoire(0, nombreDeLigne));
-    tailleMot = ft_strlen(motMystere);
+    tailleMot = strlen(motMystere);
 
-    motEtoile = malloc((tailleMot + 1) * sizeof(char));
+    motEtoile = malloc(strlen(motMystere)+1 * sizeof(char));
 
-    while(motMystere[index] != '\0'){
-      motEtoile[index] = '*';
-      index++;
-    }
-    motEtoile[index] = '\0';
+    initMot(motEtoile, motMystere);
 
     while(win != 1 && essai != 0){
       index = 0;
-      ft_putstr("Veuillez rentrer une lettre\n");
-      ft_putstr("Nombre d'essai restant : ");
-      ft_putchar(essai + 48);
-      ft_putchar('\n');
-      ft_putstr("Lettres deja proposee : ");
-      ft_putstr(listeLettre);
-      ft_putchar('\n');
-      ft_putstr(motEtoile);
-      ft_putchar('\n');
+      printf("Veuillez rentrer une lettre\n");
+      printf("Nombre d'essai restant : %d\n", essai);
+      printf("Lettres deja proposee : %s\n", listeLettre);
+      printf("%s\n", motEtoile);
       scanf(" %c", &lettreProposee);
       lettreProposee=toupper(lettreProposee);
       listeLettre[indexListeLettre] = lettreProposee;
@@ -72,10 +64,10 @@ int main(int argc, char const *argv[]) {
     }
 
     if(win == 1){
-      ft_putstr("t'as gagne");
+      printf("t'as gagne\n%s", motMystere);
     }
     else if(win == 0 && essai == 0){
-      ft_putstr("t'as perdu");
+      printf("t'as perdu, Le mot etait %s", motMystere);
     }
   }
   return 0;

@@ -41,14 +41,6 @@ char* motAleatoire(FILE* fichier, int noLigne){
         mot = fgets(mot, MAX_CHAR, fichier);
         i++;
     }
-    //i = 0;
-    /*while(mot[i] != '\0')
-      if (mot[i] == '\0') {
-        mot[i] = '\0';
-      }
-      else{
-        i++;
-      }*/
     return mot;
 }
 
